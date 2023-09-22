@@ -1,21 +1,25 @@
-import React, {useState, useEffect, ReactNode} from 'react'
+import React, {useState, ReactNode} from 'react'
 import { 
   Button, 
-  Card,
+  Stack,
   Container,
   Row,
   Col,
   Navbar,
   Form,
   InputGroup,
-  ListGroup
+  ButtonGroup
 } from 'react-bootstrap';
-import fs from 'fs'
-import axios from 'axios'
+// import fs from 'fs'
+// import axios from 'axios'
+import PublishInventory from './PublishInventory'
+import BulkPublishInventory from './BulkPublishInventory';
+import PhotoComponent from './PhotoComponent';
 
 export default function Home() {
-  const [inventoryItemArr, setInventoryItemArr] = useState()
-  const [localPhotoDBPath, setLocalPhotoDBPath] = useState()
+  // const [inventoryItemArr, setInventoryItemArr] = useState()
+  // const [localPhotoDBPath, setLocalPhotoDBPath] = useState()
+  const [currentComponent, setCurrentComponent] = useState(0)
 
   // - SKU File Structure
   //        - 12203.png
@@ -23,45 +27,15 @@ export default function Home() {
   //        - 1294813434.png
   //        - 1294813384.png
 
-  const getAllPhotosBySku = (sku: string): string[] => {
-    const photos: string[] = []
-    // fs.readdirSync()
-
-    return photos
-  }
-
-  const renderGetPhotoCard = (): ReactNode => {
-    return (
-      // <div>
-      //   <h2>Find Photos By SKU</h2>
-
-      //   <Button variant='success'></Button>
-      // </div>
-      <Card style={{width: '300px', margin: 'auto'}}>
-        <Card.Header>Find Photo By SKU</Card.Header>
-        <Card.Body>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="sku-input">SKU</InputGroup.Text>
-            <Form.Control
-              placeholder="SKU"
-              aria-label="SKU"
-              aria-describedby="sku-input"
-            />
-          </InputGroup>
-          <Button variant="primary">Fetch</Button>
-        </Card.Body>
-      </Card>
-    )
-  }
-
   const renderNavBar = (): ReactNode => {
     return (
-      <Navbar  bg="primary" data-bs-theme="dark">
+      <Navbar style={{ userSelect: 'none' }} bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">eBay Controller</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
+              Settings
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
@@ -69,20 +43,49 @@ export default function Home() {
     )
   }
 
+  const renderComponent = () => {
+    switch (currentComponent) {
+      case 0:
+        return <PublishInventory />
+      case 1:
+        return <BulkPublishInventory />
+      case 2:
+        return <PhotoComponent />
+      default:
+        break;
+    }
+  }
+
+  const setComponent = (component: number) => {
+    switch (component) {
+      case 0:
+        setCurrentComponent(0)
+        break;
+      case 1:
+        setCurrentComponent(1)
+        break;
+      case 2:
+        setCurrentComponent(2)
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
-    <div style={{ backgroundColor: '#1e1e20', height: '100vh', width: '100vw', textAlign: 'center' }}>
+    <div style={{ backgroundColor: '#333', height: '100%', width: '100%', textAlign: 'left' }}>
       {renderNavBar()}
       <Container style={{height: '100vh', margin: 'auto'}}>
-        <Row>
-          <Col xs={2} style={{ backgroundColor: '#222'}}>
-            <ListGroup>
-              <ListGroup.Item action >Publish Inventory</ListGroup.Item>
-              <ListGroup.Item action >Bulk Publish Inventory</ListGroup.Item>
-              <ListGroup.Item action >Get Photos</ListGroup.Item>
-            </ListGroup>
+        <Row style={{height: '100%', margin: 'auto', width: '100%'}}>
+          <Col xs={6} md={4} style={{ backgroundColor: '#222'}}>
+            <ButtonGroup vertical size='lg'>
+              <Button onClick={() => setComponent(0)}>📋 Publish Inventory</Button>
+              <Button onClick={() => setComponent(1)}>📚 Bulk Publish Inventory</Button>
+              <Button onClick={() => setComponent(2)}>💾 Get Photos</Button>
+            </ButtonGroup>
           </Col>
-          <Col xs={10}>
-            {renderGetPhotoCard()}
+          <Col xs={12} md={8}>
+            {renderComponent()}
           </Col>
         </Row>
       </Container>
