@@ -1,10 +1,12 @@
 import React from 'react'
 import { Stack, InputGroup, Form, Button } from 'react-bootstrap'
 
-export default function PublishInventory() {
+export const PublishInventory: React.FC = (): JSX.Element => {
+  // const [inventoryItem, setInventoryItem] = useState()
 
   const publish = () => {
-
+    // construct json
+    // send json
   }
 
   return (

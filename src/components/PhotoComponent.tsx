@@ -1,14 +1,19 @@
 import React from 'react'
 import { Stack, InputGroup, Form, Button } from 'react-bootstrap'
 
-export default function PhotoComponent() {
-  const getAllPhotosBySku = (sku: string): string[] => {
-    const photos: string[] = []
-    // fs.readdirSync()
+export const PhotoComponent: React.FC = (): JSX.Element => {
+  // const getAllPhotosBySku = (sku: string): string[] => {
+  //   const photos: string[] = []
+  //   // fs.readdirSync()
 
-    return photos
-  }
+  //   return photos
+  // }
 
+  // - SKU File Structure
+  //        - 12203.png
+  //        - 1294814583.png
+  //        - 1294813434.png
+  //        - 1294813384.png
   const searchBySku = (): string => {
 
     
@@ -19,7 +24,7 @@ export default function PhotoComponent() {
     <div style={{ backgroundColor: '#555', padding: '50px', height: '100%', width: '100%', userSelect: 'none' }}>
         <Stack direction="vertical" gap={3}>
           <div style={{ backgroundColor: '#333', padding: '50px' }}>
-            <h2>Find Photos By SKU</h2>
+            <h2>💾 Find Photos By SKU</h2>
             <InputGroup className="mb-3">
               <InputGroup.Text id="sku-input">SKU</InputGroup.Text>
               <Form.Control
